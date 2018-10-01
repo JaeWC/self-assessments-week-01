@@ -41,15 +41,14 @@ Tree.prototype.addChild = function(child) {
 };
 
 Tree.prototype.map = function (callback) {
-
   var newValue = callback(this.value)
-
   var newTree = new Tree(newValue)
 
-  this.children.map(function(elem) {
-    var newValue = callback(elem.value)
-    newTree.children.push(new Tree(newValue))
-  })
+  for (var i = 0; i < this.children.length; i++) {
+    var child = this.children[i]
+    var mappedChild = child.map(callback)
+    newTree.children.push(mappedChild)
+  }
 
   return newTree
 };
